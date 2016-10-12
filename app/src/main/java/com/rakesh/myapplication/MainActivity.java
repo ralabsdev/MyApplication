@@ -57,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
     Button buttonfact;
     Button buttonroot;
     Button buttonpi;
-    Button buttonxy;
+  //  Button buttonxy;
+    Button buttonper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //Screen Locked to only PortrateMode
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // Our plain Text Views
         final TextView ET=(TextView) findViewById(R.id.textView);
         final TextView ET1=(TextView)findViewById(R.id.textView1);
@@ -99,11 +100,12 @@ public class MainActivity extends AppCompatActivity {
         buttondot = (Button) findViewById(R.id.buttondot);
         buttondel = (Button) findViewById(R.id.buttondel);
         //Scientific Buttons
-        buttonxy = (Button) findViewById(R.id.buttonxy);
+        //buttonxy = (Button) findViewById(R.id.buttonxy);
         buttonroot = (Button) findViewById(R.id.buttonroot);
         buttonpi = (Button) findViewById(R.id.buttonpi);
         buttonpl = (Button) findViewById(R.id.buttonpl);
         buttonpr = (Button) findViewById(R.id.buttonpr);
+        buttonper=(Button)findViewById(R.id.buttonper);
         //Make an array list to make it look good :D
         final ArrayList<Button> buttons = new ArrayList<>();
         buttons.add(buttonzero);
@@ -123,14 +125,17 @@ public class MainActivity extends AppCompatActivity {
         buttons.add(buttonfact);
         buttons.add(buttondot);
         buttons.add(buttondel);
+
         //Scientific Buttons
         ArrayList<Button> scientificbuttons = new ArrayList<>();
         scientificbuttons.add(buttonroot);
         scientificbuttons.add(buttonans);
-        scientificbuttons.add(buttonxy);
+        //scientificbuttons.add(buttonxy);
         scientificbuttons.add(buttonpl);
         scientificbuttons.add(buttonpr);
         scientificbuttons.add(buttonpi);
+        scientificbuttons.add(buttonper);
+
 
 
         for (final Button button : buttons) {
@@ -350,17 +355,17 @@ public class MainActivity extends AppCompatActivity {
                             }
                             else {ET.append("√");}
                              break;
-                        case R.id.buttonxy:
-                            if (ET.getText().toString().equals("^")){
+                        case R.id.buttonper:
+                            if (ET.getText().toString().equals("%")){
                                 ET.setText(null);
                             }
-                            else if (ET.getText().toString().equals("")||ET.getText().toString().endsWith("^")||
-                                    ET.getText().toString().endsWith("^^"))
+                            else if (ET.getText().toString().equals("")||ET.getText().toString().endsWith("%")||
+                                    ET.getText().toString().endsWith("%"))
                             {
                                 ET.setText(ET.getText());
                             }
                             else {
-                                ET.append("^");
+                                ET.append("%");
                             }
 
                             break;
@@ -435,7 +440,7 @@ public class MainActivity extends AppCompatActivity {
                if(ET.getText().toString().endsWith("+")
                  || ET.getText().toString().endsWith("-") ||ET.getText().toString().endsWith("/")||ET.getText().toString().endsWith("*")||
                  ET.getText().toString().endsWith("√")||
-                 ET.getText().toString().endsWith("pi")||ET.getText().toString().endsWith("^")||ET.getText().toString().endsWith("("))
+                 ET.getText().toString().endsWith("pi")||ET.getText().toString().endsWith("^")||ET.getText().toString().endsWith("(")||ET.getText().toString().endsWith("%"))
                 {
                         ET.setText(ET.getText().toString().substring(0, ET.length() - 1));
                         Parser p = new ArityParser();
@@ -500,7 +505,24 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.settings) {
+            return true;
+        }
+        else if(id==R.id.history)
+        {
+            Intent intent = new Intent(getApplicationContext(),History.class);
+            startActivity(intent);
+            return true;
+        }
+        else if (id==R.id.share)
+        {
+            String EXTRA_STR="Please Download this amazing Calculator App by *RaLabs*";
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.putExtra(Intent.EXTRA_TEXT, EXTRA_STR);
+            if (i.resolveActivity(getPackageManager()) != null) {
+                startActivity(i);
+            }
             return true;
         }
 
