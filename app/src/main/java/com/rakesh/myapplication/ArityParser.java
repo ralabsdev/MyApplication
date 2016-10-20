@@ -19,7 +19,7 @@ public class ArityParser extends AppCompatActivity implements Parser  {
     public String parser(String expression) {
         try {
             Symbols s = new Symbols();
-                double result=s.eval(expression);
+                float result= (float) s.eval(expression);
                 return ""+result;
 
             }catch (SyntaxException e){return "error";}
